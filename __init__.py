@@ -1,7 +1,7 @@
 import torch
 import math
 
-from hijack_utils import CondFunc
+from .hijack_utils import CondFunc
 
 # MPS workaround for https://github.com/pytorch/pytorch/issues/96153
 CondFunc('torch.narrow', lambda orig_func, *args, **kwargs: orig_func(*args, **kwargs).clone(), None)
@@ -46,7 +46,7 @@ CondFunc('deepfloyd_if.model.gaussian_diffusion._extract_into_tensor', lambda _,
 
 
 # Use sub-quadratic attention if xformers is not being used
-from sub_quadratic_attention import efficient_dot_product_attention
+from .sub_quadratic_attention import efficient_dot_product_attention
 import deepfloyd_if.model.unet
 
 upcast_attn = False
